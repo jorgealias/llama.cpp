@@ -20,6 +20,7 @@
 	import { ScrollArea } from '$lib/components/ui/scroll-area';
 	import { config, settingsStore } from '$lib/stores/settings.svelte';
 	import { setMode } from 'mode-watcher';
+	import { ColorMode } from '$lib/enums/ui';
 	import type { Component } from 'svelte';
 
 	interface Props {
@@ -42,9 +43,9 @@
 					label: 'Theme',
 					type: 'select',
 					options: [
-						{ value: 'system', label: 'System', icon: Monitor },
-						{ value: 'light', label: 'Light', icon: Sun },
-						{ value: 'dark', label: 'Dark', icon: Moon }
+						{ value: ColorMode.SYSTEM, label: 'System', icon: Monitor },
+						{ value: ColorMode.LIGHT, label: 'Light', icon: Sun },
+						{ value: ColorMode.DARK, label: 'Dark', icon: Moon }
 					]
 				},
 				{ key: 'apiKey', label: 'API Key', type: 'input' },
@@ -320,7 +321,7 @@
 	function handleThemeChange(newTheme: string) {
 		localConfig.theme = newTheme;
 
-		setMode(newTheme as 'light' | 'dark' | 'system');
+		setMode(newTheme as ColorMode);
 	}
 
 	function handleConfigChange(key: string, value: string | boolean) {
@@ -330,7 +331,7 @@
 	function handleReset() {
 		localConfig = { ...config() };
 
-		setMode(localConfig.theme as 'light' | 'dark' | 'system');
+		setMode(localConfig.theme as ColorMode);
 	}
 
 	function handleSave() {

@@ -15,7 +15,7 @@
  *        └── message 5 (assistant)
  */
 
-import { MessageRole } from '$lib/enums/chat';
+import { MessageRole } from '$lib/enums';
 
 /**
  * Filters messages to get the conversation path from root to a specific leaf node.
@@ -69,8 +69,8 @@ export function filterByLeafNodeId(
 
 	// Sort: system messages first, then by timestamp
 	result.sort((a, b) => {
-		if (a.role === 'system' && b.role !== 'system') return -1;
-		if (a.role !== 'system' && b.role === 'system') return 1;
+		if (a.role === MessageRole.SYSTEM && b.role !== MessageRole.SYSTEM) return -1;
+		if (a.role !== MessageRole.SYSTEM && b.role === MessageRole.SYSTEM) return 1;
 
 		return a.timestamp - b.timestamp;
 	});
